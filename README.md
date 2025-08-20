@@ -169,21 +169,3 @@ flowchart LR
   U3 -. optional .-> C2
   T1 -. optional .-> C3
 
-sequenceDiagram
-  participant DEV as Device (GPS/AIS/Radar)
-  participant SER as Serial Port (/dev/ttyUSB0)
-  participant GW as Python Gateway
-  participant NET as Network (UDP/TCP)
-  participant APP as OpenCPN/Apps
-
-  DEV->>SER: NMEA sentence\n$GPGGA,...*CS\r\n
-  SER->>GW: read()
-  GW->>GW: checksum validate & normalize
-
-  alt UDP/Unicast/Broadcast/Multicast
-    GW-->>NET: UDP packet(s)
-    NET-->>APP: UDP payload (NMEA line)
-  else TCP Server
-    APP->>GW: TCP connect
-    GW-->>APP: stream NMEA lines
-  end
