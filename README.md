@@ -165,7 +165,7 @@ flowchart LR
 
   U1 -. optional .-> C2
   U3 -. optional .-> C2
-  T1 -. optional .-> C3
+  T1 -. optional .-> C3\n
 
 #Data Flow (Mermaid Sequence)
 
