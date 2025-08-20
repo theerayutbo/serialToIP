@@ -119,6 +119,8 @@ MIT
                                                                 | server and receive NMEA   |
                                                                 +---------------------------+
 
+### Overview (Mermaid)
+
 ```mermaid
 flowchart LR
   subgraph A[Sensors / Talkers]
@@ -165,24 +167,25 @@ flowchart LR
 
   U1 -. optional .-> C2
   U3 -. optional .-> C2
-  T1 -. optional .-> C3\n
+  T1 -. optional .-> C3
+'''
 
 #Data Flow (Mermaid Sequence)
-
 sequenceDiagram
-    participant DEV as Device (GPS/AIS/Radar)
-    participant SER as Serial Port (/dev/ttyUSB0)
-    participant GW as Python Gateway
-    participant NET as Network (UDP/TCP)
-    participant APP as OpenCPN/Apps
+  participant DEV as Device (GPS/AIS/Radar)
+  participant SER as Serial Port (/dev/ttyUSB0)
+  participant GW as Python Gateway
+  participant NET as Network (UDP/TCP)
+  participant APP as OpenCPN/Apps
 
-    DEV->>SER: NMEA sentence<br/>$GPGGA,...*CS\\r\\n
-    SER->>GW: read()
-    GW->>GW: checksum validate & normalize
-    alt UDP/Unicast/Broadcast/Multicast
-        GW-->>NET: UDP packet(s)
-        NET-->>APP: UDP payload (NMEA line)
-    else TCP Server
-        APP->>GW: TCP connect
-        GW-->>APP: stream NMEA lines
-    end
+  DEV->>SER: NMEA sentence\n$GPGGA,...*CS\r\n
+  SER->>GW: read()
+  GW->>GW: checksum validate & normalize
+
+  alt UDP/Unicast/Broadcast/Multicast
+    GW-->>NET: UDP packet(s)
+    NET-->>APP: UDP payload (NMEA line)
+  else TCP Server
+    APP->>GW: TCP connect
+    GW-->>APP: stream NMEA lines
+  end
