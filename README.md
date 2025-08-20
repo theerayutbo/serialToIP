@@ -34,9 +34,9 @@ python nmea_serial_to_ip.py -p <serial_port> -b <baudrate> [options...]
 ตัวเลือกหลัก
 
 ตัวเลือก	คำอธิบาย
--p, --serial-port	พอร์ต serial (เช่น COM3, /dev/ttyUSB0)
--b, --baudrate	baudrate (ค่าเริ่มต้น 4800, AIS มัก 38400)
--u, --udp host:port	ส่งข้อมูลไปยัง UDP ปลายทาง (ระบุได้หลายครั้ง)
+-p, --serial-port	พอร์ต serial (เช่น COM3, /dev/ttyUSB0) \n
+-b, --baudrate	baudrate (ค่าเริ่มต้น 4800, AIS มัก 38400) \n
+-u, --udp host:port	ส่งข้อมูลไปยัง UDP ปลายทาง (ระบุได้หลายครั้ง) \n
 --udp-broadcast	เปิดโหมด broadcast สำหรับ UDP
 --mcast group:port	ส่งข้อมูลเป็น multicast (เช่น 239.255.0.1:10110)
 --mcast-if <ip>	ระบุ IP ของ network interface ที่ใช้ส่ง multicast
