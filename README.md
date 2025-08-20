@@ -121,50 +121,51 @@ MIT
 
 ```mermaid
 flowchart LR
-    subgraph A[Sensors / Talkers]
-      S1[GPS / GNSS<br/>NMEA 0183]
-      S2[AIS Receiver<br/>NMEA 0183]
-      S3[Radar / Others<br/>NMEA-like]
-    end
+  subgraph A[Sensors / Talkers]
+    S1["GPS / GNSS\nNMEA 0183"]
+    S2["AIS Receiver\nNMEA 0183"]
+    S3["Radar / Others\nNMEA-like"]
+  end
 
-    S1 -- RS-232/USB --> G
-    S2 -- RS-232/USB --> G
-    S3 -- RS-232/USB --> G
+  S1 --> G
+  S2 --> G
+  S3 --> G
 
-    subgraph G[Python NMEA Serial → IP Gateway]
-      P1[Read Serial<br/>(pyserial)]
-      P2[Validate & Normalize<br/>(checksum, CRLF)]
-      P3[Fan-out<br/>UDP / UDP Broadcast / Multicast / TCP]
-    end
+  subgraph G[Python NMEA Serial → IP Gateway]
+    P1["Read Serial (pyserial)"]
+    P2["Validate & Normalize\n(checksum, CRLF)"]
+    P3["Fan-out\nUDP / UDP Broadcast / Multicast / TCP"]
+  end
 
-    P1 --> P2 --> P3
+  P1 --> P2
+  P2 --> P3
 
-    subgraph N[Network]
-      U1[UDP Unicast<br/>(e.g. 127.0.0.1:10110)]
-      U2[UDP Broadcast<br/>(e.g. 192.168.1.255:10110)]
-      U3[UDP Multicast<br/>(e.g. 239.255.0.1:10110)]
-      T1[TCP Server<br/>(e.g. 0.0.0.0:10110)]
-    end
+  subgraph N[Network]
+    U1["UDP Unicast\n127.0.0.1:10110"]
+    U2["UDP Broadcast\n192.168.1.255:10110"]
+    U3["UDP Multicast\n239.255.0.1:10110"]
+    T1["TCP Server\n0.0.0.0:10110"]
+  end
 
-    P3 --> U1
-    P3 --> U2
-    P3 --> U3
-    P3 --> T1
+  P3 --> U1
+  P3 --> U2
+  P3 --> U3
+  P3 --> T1
 
-    subgraph C[Consumers / Chartplotters]
-      C1[OpenCPN]
-      C2[TimeZero / Others]
-      C3[Custom Apps]
-    end
+  subgraph C[Consumers / Chartplotters]
+    C1[OpenCPN]
+    C2[TimeZero / Others]
+    C3[Custom Apps]
+  end
 
-    U1 --> C1
-    U2 --> C1
-    U3 --> C1
-    T1 --> C1
+  U1 --> C1
+  U2 --> C1
+  U3 --> C1
+  T1 --> C1
 
-    U1 -. optional .-> C2
-    U3 -. optional .-> C2
-    T1 -. optional .-> C3
+  U1 -. optional .-> C2
+  U3 -. optional .-> C2
+  T1 -. optional .-> C3
 
 #Data Flow (Mermaid Sequence)
 
